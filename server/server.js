@@ -31,6 +31,12 @@ app.use("/api/emergency", emergencyRoutes);
 app.get("/", (req, res) => {
   res.send("BloodLink Backend Running 🚀");
 });
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Server is running"
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 
