@@ -8,7 +8,6 @@ const donorRoutes = require("./routes/donorRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
 const app = express();
 
-const cors = require("cors");
 
 app.use(cors({
   origin: "*",
