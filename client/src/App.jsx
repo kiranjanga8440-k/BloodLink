@@ -4,7 +4,7 @@ import RegisterDonor from "./components/RegisterDonor";
 import FindDonor from "./pages/FindDonor";
 import EmergencyRequest from "./pages/EmergencyRequest";
 import EmergencyDashboard from "./pages/EmergencyDashboard";
-
+import AdminLogin from "./pages/AdminLogin";
 function App() {
   return (
     <div>
@@ -32,6 +32,7 @@ function App() {
         <Route path="/find" element={<FindDonor />} />
         <Route path="/emergency" element={<EmergencyRequest />} />
         <Route path="/requests" element={<EmergencyDashboard />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
       </Routes>
 
     </div>
