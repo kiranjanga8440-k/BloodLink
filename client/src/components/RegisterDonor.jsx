@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 
 function RegisterDonor() {
+  const API = import.meta.env.VITE_API_URL;
+
   const [donor, setDonor] = useState({
     name: "",
     email: "",
@@ -27,8 +29,9 @@ function RegisterDonor() {
     }
 
     try {
+     
       const response = await axios.post(
-        "http://localhost:5000/api/donors/register",
+        `${API}/api/donors/register`,
         donor
       );
 

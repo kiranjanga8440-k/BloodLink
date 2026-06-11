@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL;
 function EmergencyRequest() {
   const [form, setForm] = useState({
     patientName: "",
@@ -21,10 +21,7 @@ function EmergencyRequest() {
     e.preventDefault();
 
     try {
-      await axios.post(
-        "http://localhost:5000/api/emergency",
-        form
-      );
+      await axios.post(`${API}/api/emergency`, form);
 
       alert("Emergency Request Submitted!");
 

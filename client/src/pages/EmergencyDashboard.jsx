@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL;
 function EmergencyDashboard() {
   const [requests, setRequests] = useState([]);
 
@@ -10,9 +10,7 @@ function EmergencyDashboard() {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/api/emergency"
-      );
+      const res = await axios.get(`${API}/api/emergency`);
 
       setRequests(res.data);
     } catch (error) {

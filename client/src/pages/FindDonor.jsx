@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL;
 function FindDonor() {
   const [donors, setDonors] = useState([]);
   const [search, setSearch] = useState("");
@@ -10,8 +10,7 @@ function FindDonor() {
   }, []);
 
   const fetchDonors = async () => {
-    const res = await axios.get("http://localhost:5000/api/donors");
-    setDonors(res.data);
+    const res = await axios.get(`${API}/api/donors`);
   };
 
   const filteredDonors = donors.filter(
