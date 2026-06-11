@@ -5,6 +5,11 @@ const donorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   bloodGroup: {
     type: String,
     required: true,
@@ -12,6 +17,7 @@ const donorSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
+    unique: true,
   },
   city: {
     type: String,
