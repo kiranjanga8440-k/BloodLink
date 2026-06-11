@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import API from "../api";
+
 function FindDonor() {
   const [donors, setDonors] = useState([]);
   const [search, setSearch] = useState("");
@@ -9,16 +9,15 @@ function FindDonor() {
   useEffect(() => {
     fetchDonors();
   }, []);
-  const res = await axios.get(`${API}/api/donors`);
-setDonors(res.data);
-const fetchDonors = async () => {
-  try {
-    const res = await axios.get(`${API}/api/donors`);
-    setDonors(res.data);
-  } catch (error) {
-    console.log("Error fetching donors:", error);
-  }
-};
+
+  const fetchDonors = async () => {
+    try {
+      const res = await axios.get(`${API}/api/donors`);
+      setDonors(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const filteredDonors = donors.filter(
     (donor) =>
@@ -42,10 +41,7 @@ const fetchDonors = async () => {
 
       <div className="grid md:grid-cols-3 gap-6">
         {filteredDonors.map((donor) => (
-          <div
-            key={donor._id}
-            className="bg-white rounded-2xl shadow-lg p-6"
-          >
+          <div key={donor._id} className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-3xl font-bold text-red-500">
               {donor.bloodGroup}
             </h2>

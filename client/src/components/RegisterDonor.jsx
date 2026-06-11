@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+import API from "../api";
 function RegisterDonor() {
- import API from "../api";
+
 
   const [donor, setDonor] = useState({
     name: "",
