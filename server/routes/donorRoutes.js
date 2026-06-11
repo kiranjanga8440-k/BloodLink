@@ -47,5 +47,22 @@ router.get("/", async (req, res) => {
     });
   }
 });
+router.delete("/:id", async (req, res) => {
+  try {
+    await Donor.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "Donor deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
 
 module.exports = router;
