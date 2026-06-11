@@ -40,18 +40,30 @@ router.get("/", async (req, res) => {
 });
 router.delete("/:id", async (req, res) => {
   try {
-    await EmergencyRequest.findByIdAndDelete(req.params.id);
+    const id = req.params.id;
+
+    console.log("DELETE ID:", id);
+
+    const deleted = await EmergencyRequest.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({
+        success: false,
+        message: "Request not found",
+      });
+    }
 
     res.json({
       success: true,
       message: "Request deleted successfully",
     });
+
   } catch (error) {
-    console.log(error);
+    console.log("DELETE ERROR:", error);
 
     res.status(500).json({
       success: false,
-      message: "Server Error",
+      message: error.message,
     });
   }
 });
