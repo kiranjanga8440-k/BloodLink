@@ -30,7 +30,7 @@ function AdminRequests() {
       const res = await axios.get(
         `${API}/api/emergency/match/${bloodGroup}/${city}`
       );
-
+      console.log("MATCH API RESPONSE:", res.data);
       setMatchedDonors(res.data.donors);
     } catch (error) {
       console.log(error);
