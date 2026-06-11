@@ -7,6 +7,8 @@ require("dotenv").config();
 const donorRoutes = require("./routes/donorRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
 const app = express();
+const adminRoutes = require("./routes/adminRoutes");
+
 
 
 app.use(cors({
@@ -37,6 +39,7 @@ app.get("/health", (req, res) => {
     message: "Server is running"
   });
 });
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 
