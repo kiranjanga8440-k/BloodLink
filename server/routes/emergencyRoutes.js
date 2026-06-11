@@ -38,5 +38,20 @@ router.get("/", async (req, res) => {
     });
   }
 });
+router.delete("/:id", async (req, res) => {
+  try {
+    await Emergency.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "Request deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
 
 module.exports = router;
