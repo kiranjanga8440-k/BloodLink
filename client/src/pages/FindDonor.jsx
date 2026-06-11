@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "https://bloodlink-2-emlj.onrender.com";
 function FindDonor() {
   const [donors, setDonors] = useState([]);
   const [search, setSearch] = useState("");
@@ -8,10 +8,14 @@ function FindDonor() {
   useEffect(() => {
     fetchDonors();
   }, []);
-
-  const fetchDonors = async () => {
+const fetchDonors = async () => {
+  try {
     const res = await axios.get(`${API}/api/donors`);
-  };
+    setDonors(res.data);
+  } catch (error) {
+    console.log("Error fetching donors:", error);
+  }
+};
 
   const filteredDonors = donors.filter(
     (donor) =>
