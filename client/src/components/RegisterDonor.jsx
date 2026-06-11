@@ -47,8 +47,11 @@ function RegisterDonor() {
         city: "",
       });
     } catch (error) {
-      console.log(error);
-      alert("Something went wrong!");
+      if (error.response) {
+         alert(error.response.data.message);
+      } else {
+         alert("Something went wrong!");
+      }
     }
   };
 
