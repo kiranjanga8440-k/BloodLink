@@ -1,15 +1,20 @@
+const express = require("express");
+const router = express.Router();
+const Donor = require("../models/Donor");
+
+// Register Donor
 router.post("/register", async (req, res) => {
   try {
     const { email, phone } = req.body;
 
     const existingDonor = await Donor.findOne({
-      $or: [{ email }, { phone }]
+      $or: [{ email }, { phone }],
     });
 
     if (existingDonor) {
       return res.status(400).json({
         success: false,
-        message: "Donor already registered!"
+        message: "Donor already registered!",
       });
     }
 
@@ -20,7 +25,6 @@ router.post("/register", async (req, res) => {
       success: true,
       message: "Donor Registered Successfully",
     });
-
   } catch (error) {
     console.log(error);
 
@@ -30,3 +34,18 @@ router.post("/register", async (req, res) => {
     });
   }
 });
+
+// Get All Donors
+router.get("/", async (req, res) => {
+  try {
+    const donors = await Donor.find();
+    res.json(donors);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
+});
+
+module.exports = router;
