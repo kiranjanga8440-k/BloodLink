@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const EmergencyRequest = require("../models/EmergencyRequest");
-
+const Donor = require("../models/Donor");
 // Create emergency request
 router.post("/", async (req, res) => {
   try {
@@ -45,6 +45,24 @@ router.delete("/:id", async (req, res) => {
     res.json({
       success: true,
       message: "Request deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
+router.get("/match/:bloodGroup", async (req, res) => {
+  try {
+    const { bloodGroup } = req.params;
+
+    const donors = await Donor.find({ bloodGroup });
+
+    res.json({
+      success: true,
+      count: donors.length,
+      donors,
     });
   } catch (error) {
     res.status(500).json({
