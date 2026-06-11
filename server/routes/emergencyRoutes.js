@@ -53,11 +53,14 @@ router.delete("/:id", async (req, res) => {
     });
   }
 });
-router.get("/match/:bloodGroup", async (req, res) => {
+router.get("/match/:bloodGroup/:city", async (req, res) => {
   try {
-    const { bloodGroup } = req.params;
+    const { bloodGroup, city } = req.params;
 
-    const donors = await Donor.find({ bloodGroup });
+    const donors = await Donor.find({
+      bloodGroup,
+      city: city.toLowerCase(),
+    });
 
     res.json({
       success: true,
