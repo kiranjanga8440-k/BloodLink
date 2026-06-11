@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = import.meta.env.VITE_API_URL || "https://bloodlink-2-emlj.onrender.com";
+import API from "../api";
 function FindDonor() {
   const [donors, setDonors] = useState([]);
   const [search, setSearch] = useState("");

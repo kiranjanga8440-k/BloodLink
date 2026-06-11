@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 function RegisterDonor() {
- const API = import.meta.env.VITE_API_URL || "https://bloodlink-2-emlj.onrender.com";
+ import API from "../api";
 
   const [donor, setDonor] = useState({
     name: "",
