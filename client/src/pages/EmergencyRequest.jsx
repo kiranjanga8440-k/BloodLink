@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-
 import API from "../api";
+
 function EmergencyRequest() {
   const [form, setForm] = useState({
     patientName: "",
@@ -11,6 +11,7 @@ function EmergencyRequest() {
     phone: "",
   });
 
+  // Handle input change
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -18,14 +19,16 @@ function EmergencyRequest() {
     });
   };
 
+  // Submit request
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post(`${API}/api/emergency`, form);
+      const res = await axios.post(`${API}/api/emergency`, form);
 
-      alert("Emergency Request Submitted!");
+      alert(res.data.message || "Emergency Request Submitted!");
 
+      // reset form
       setForm({
         patientName: "",
         bloodGroup: "",
@@ -33,17 +36,19 @@ function EmergencyRequest() {
         city: "",
         phone: "",
       });
+
     } catch (error) {
-      alert("Something went wrong");
       console.log(error);
+      alert("Something went wrong while submitting request");
     }
   };
 
   return (
     <div className="min-h-screen bg-red-50 p-8">
       <div className="max-w-lg mx-auto bg-white shadow-lg rounded-2xl p-8">
+
         <h1 className="text-3xl font-bold text-center text-red-600 mb-6">
-          Emergency Blood Request
+          🚨 Emergency Blood Request
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -61,7 +66,7 @@ function EmergencyRequest() {
           <input
             type="text"
             name="bloodGroup"
-            placeholder="Blood Group Needed"
+            placeholder="Blood Group Needed (A+, B-, etc)"
             className="w-full border p-3 rounded-lg"
             value={form.bloodGroup}
             onChange={handleChange}
@@ -71,7 +76,7 @@ function EmergencyRequest() {
           <input
             type="text"
             name="hospital"
-            placeholder="Hospital"
+            placeholder="Hospital Name"
             className="w-full border p-3 rounded-lg"
             value={form.hospital}
             onChange={handleChange}
@@ -99,9 +104,10 @@ function EmergencyRequest() {
           />
 
           <button
+            type="submit"
             className="w-full bg-red-600 text-white p-3 rounded-lg hover:bg-red-700"
           >
-            Submit Request
+            Submit Emergency Request
           </button>
 
         </form>
