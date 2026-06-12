@@ -25,6 +25,7 @@ const emergencyRequestSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+
 module.exports = mongoose.model(
   "EmergencyRequest",
   emergencyRequestSchema

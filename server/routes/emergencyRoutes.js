@@ -3,6 +3,15 @@ const router = express.Router();
 
 const EmergencyRequest = require("../models/EmergencyRequest");
 const Donor = require("../models/Donor");
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 // Create emergency request
 router.post("/", async (req, res) => {
   try {
@@ -73,7 +82,30 @@ router.get("/match/:bloodGroup/:city", async (req, res) => {
 
     const donors = await Donor.find({
       bloodGroup,
-      city: city.toLowerCase(),
+      city: { $regex: city, $options: "i" },
+    });
+
+    // Send emails to donors
+    donors.forEach((donor) => {
+      if (donor.email) {
+        transporter.sendMail({
+          from: process.env.EMAIL,
+          to: donor.email,
+          subject: "🩸 Emergency Blood Request - BloodLink",
+          text: `
+Hello ${donor.name},
+
+There is an emergency blood request:
+
+Blood Group: ${bloodGroup}
+City: ${city}
+
+Please respond if you can donate.
+
+- BloodLink Team
+          `,
+        });
+      }
     });
 
     res.json({
@@ -81,11 +113,25 @@ router.get("/match/:bloodGroup/:city", async (req, res) => {
       count: donors.length,
       donors,
     });
+
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Server Error",
+    console.log(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+router.get("/test-mail", async (req, res) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: process.env.EMAIL,
+      subject: "BloodLink Test Email",
+      text: "Email system is working 🚀",
     });
+
+    res.send("Email sent successfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Email failed");
   }
 });
 
