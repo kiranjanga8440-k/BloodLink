@@ -6,11 +6,16 @@ const Donor = require("../models/Donor");
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 10000, // 10 sec
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 });
 // Create emergency request
 router.post("/", async (req, res) => {
@@ -121,17 +126,33 @@ Please respond if you can donate.
 });
 router.get("/test-mail", async (req, res) => {
   try {
-    await transporter.sendMail({
+    const mailPromise = transporter.sendMail({
       from: process.env.EMAIL,
       to: process.env.EMAIL,
-      subject: "BloodLink Test Email",
-      text: "Email system is working 🚀",
+      subject: "BloodLink Test",
+      text: "Working",
     });
 
-    res.send("Email sent successfully");
+    // timeout wrapper
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Email timeout")), 10000)
+    );
+
+    const result = await Promise.race([mailPromise, timeout]);
+
+    res.json({
+      success: true,
+      message: "Email sent",
+      result,
+    });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Email failed");
+    console.log("EMAIL ERROR:", error.message);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 });
 
