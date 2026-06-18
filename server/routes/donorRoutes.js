@@ -42,12 +42,14 @@ router.post("/register", async (req, res) => {
 });
 
 // Get All Donors
-router.get("/", async (req, res) => {
+router.get("/verified", async (req, res) => {
   try {
-    const donors = await Donor.find();
+    const donors = await Donor.find({
+      verified: true
+    });
+
     res.json(donors);
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       message: "Server Error",
     });
@@ -89,6 +91,32 @@ router.put("/verify/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: error.message
+    });
+  }
+});
+// Dashboard Statistics
+router.get("/stats", async (req, res) => {
+  try {
+    const totalDonors = await Donor.countDocuments();
+
+    const verifiedDonors = await Donor.countDocuments({
+      verified: true,
+    });
+
+    const unverifiedDonors = await Donor.countDocuments({
+      verified: false,
+    });
+
+    res.json({
+      totalDonors,
+      verifiedDonors,
+      unverifiedDonors,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Server Error",
     });
   }
 });
