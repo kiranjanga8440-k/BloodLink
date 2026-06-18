@@ -8,6 +8,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminDonors from "./pages/AdminDonors";
 import AdminRequests from "./pages/AdminRequests";
+import Profile from "./pages/Profile";
 function App() {
   return (
     <div>
