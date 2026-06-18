@@ -10,6 +10,7 @@ import AdminDonors from "./pages/AdminDonors";
 import AdminRequests from "./pages/AdminRequests";
 import Profile from "./pages/Profile";
 function App() {
+
   return (
     <div>
       <nav className="bg-red-600 text-white p-4 shadow-lg">
@@ -41,7 +42,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/donors" element={<AdminDonors />} />
         <Route path="/admin/requests" element={<AdminRequests />} />
-        <Route path="/profile" element={<Profile donor={sampleDonor} />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
     </div>
