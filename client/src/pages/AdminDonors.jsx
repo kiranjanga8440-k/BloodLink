@@ -27,6 +27,16 @@ function AdminDonors() {
       alert("Error deleting donor");
     }
   };
+  const verifyDonor = async (id) => {
+    try {
+      await axios.put(`${API}/api/donors/verify/${id}`);
+      alert("Donor verified");
+
+      fetchDonors(); // reload donor list
+    } catch (err) {
+      alert("Verification failed");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-red-50 p-8">
@@ -65,6 +75,15 @@ function AdminDonors() {
               <b>Total Donations:</b>
               {donor.totalDonations}
             </p>
+
+            {!donor.verified && (
+              <button
+                className="mt-4 w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-700"
+                onClick={() => verifyDonor(donor._id)}
+              >
+                Verify Donor
+              </button>
+            )}
             <button
               className="mt-4 w-full bg-red-600 text-white p-2 rounded-lg hover:bg-red-700"
               onClick={() => deleteDonor(donor._id)}
