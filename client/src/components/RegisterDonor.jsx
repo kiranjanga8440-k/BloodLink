@@ -8,6 +8,7 @@ function RegisterDonor() {
     name: "",
     email: "",
     phone: "",
+    age: "",
     bloodGroup: "",
     city: "",
   });
@@ -43,6 +44,7 @@ function RegisterDonor() {
         name: "",
         email: "",
         phone: "",
+        age: "",
         bloodGroup: "",
         city: "",
       });
@@ -103,7 +105,7 @@ function RegisterDonor() {
           type="number"
           name="age"
           placeholder="Age"
-          value={form.age}
+          value={donor.age || ""}
           onChange={handleChange}
           className="w-full border p-3 rounded"
         />
