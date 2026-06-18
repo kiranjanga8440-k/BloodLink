@@ -70,5 +70,27 @@ router.delete("/:id", async (req, res) => {
     });
   }
 });
+router.put("/verify/:id", async (req, res) => {
+  try {
+    const donor = await Donor.findById(req.params.id);
+
+    if (!donor) {
+      return res.status(404).json({
+        message: "Donor not found"
+      });
+    }
+
+    donor.verified = true;
+    await donor.save();
+
+    res.json({
+      message: "Donor verified successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+});
 
 module.exports = router;
