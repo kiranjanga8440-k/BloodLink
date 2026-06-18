@@ -99,7 +99,14 @@ function RegisterDonor() {
           className="w-full border p-3 rounded-lg"
           required
         />
-
+        <input
+          type="number"
+          name="age"
+          placeholder="Age"
+          value={form.age}
+          onChange={handleChange}
+          className="w-full border p-3 rounded"
+        />
         <select
           name="bloodGroup"
           value={donor.bloodGroup}
