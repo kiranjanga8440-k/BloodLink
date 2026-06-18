@@ -120,5 +120,16 @@ router.get("/stats", async (req, res) => {
     });
   }
 });
+router.get("/", async (req, res) => {
+  try {
+    const donors = await Donor.find();
+
+    res.json(donors);
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
+});
 
 module.exports = router;
