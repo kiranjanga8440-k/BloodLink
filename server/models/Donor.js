@@ -10,6 +10,10 @@ const donorSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  age: {
+  type: Number,
+  required: true
+  },
   bloodGroup: {
     type: String,
     required: true,

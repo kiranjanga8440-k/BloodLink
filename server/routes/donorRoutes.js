@@ -17,6 +17,12 @@ router.post("/register", async (req, res) => {
         message: "Donor already registered!",
       });
     }
+    if (req.body.age < 18) {
+      return res.status(400).json({
+        success: false,
+        message: "Donor must be at least 18 years old"
+      });
+    }
 
     const donor = new Donor(req.body);
     await donor.save();
