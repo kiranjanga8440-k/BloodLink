@@ -27,6 +27,20 @@ const donorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  verified: {
+    type: Boolean,
+    default: false
+  },
+
+  lastDonationDate: {
+    type: Date,
+    default: null
+  },
+
+  totalDonations: {
+    type: Number,
+    default: 0
+  }
 });
 
 module.exports = mongoose.model("Donor", donorSchema);
