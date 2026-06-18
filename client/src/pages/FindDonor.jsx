@@ -12,10 +12,11 @@ function FindDonor() {
 
   const fetchDonors = async () => {
     try {
-      const res = await axios.get(`${API}/api/donors`);
+      const res = await axios.get(`${API}/api/donors/verified`);
       setDonors(res.data);
     } catch (error) {
       console.log(error);
+      setDonors(res.data);
     }
   };
 
