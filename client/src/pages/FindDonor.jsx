@@ -57,6 +57,24 @@ function FindDonor() {
             <p>
               <strong>Phone:</strong> {donor.phone}
             </p>
+            <p><b>Age:</b> {donor.age}</p>
+
+            <p>
+              <b>Verified:</b>
+              {donor.verified ? " ✅ Verified" : " ❌ Not Verified"}
+            </p>
+
+            <p>
+              <b>Last Donation:</b>
+              {donor.lastDonationDate
+                ? new Date(donor.lastDonationDate).toLocaleDateString()
+                : "Never Donated"}
+            </p>
+
+            <p>
+              <b>Total Donations:</b>
+              {donor.totalDonations}
+            </p>
 
             <button className="mt-5 w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600">
               Request Blood

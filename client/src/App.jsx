@@ -39,6 +39,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/donors" element={<AdminDonors />} />
         <Route path="/admin/requests" element={<AdminRequests />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
     </div>

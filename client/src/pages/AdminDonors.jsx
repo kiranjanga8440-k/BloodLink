@@ -47,7 +47,24 @@ function AdminDonors() {
             <p><strong>Name:</strong> {donor.name}</p>
             <p><strong>City:</strong> {donor.city}</p>
             <p><strong>Phone:</strong> {donor.phone}</p>
+            <p><b>Age:</b> {donor.age}</p>
 
+            <p>
+              <b>Verified:</b>
+              {donor.verified ? " ✅ Verified" : " ❌ Not Verified"}
+            </p>
+
+            <p>
+              <b>Last Donation:</b>
+              {donor.lastDonationDate
+                ? new Date(donor.lastDonationDate).toLocaleDateString()
+                : "Never Donated"}
+            </p>
+
+            <p>
+              <b>Total Donations:</b>
+              {donor.totalDonations}
+            </p>
             <button
               className="mt-4 w-full bg-red-600 text-white p-2 rounded-lg hover:bg-red-700"
               onClick={() => deleteDonor(donor._id)}
