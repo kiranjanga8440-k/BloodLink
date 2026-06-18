@@ -25,6 +25,7 @@ function App() {
             <Link to="/find">Find Donor</Link>
             <Link to="/emergency">Emergency</Link>
             <Link to="/requests">Requests</Link>
+            <Link to="/profile">Profile</Link>
           </div>
 
         </div>
@@ -40,7 +41,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/donors" element={<AdminDonors />} />
         <Route path="/admin/requests" element={<AdminRequests />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile donor={sampleDonor} />} />
       </Routes>
 
     </div>

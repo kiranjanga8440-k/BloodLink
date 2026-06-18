@@ -14,7 +14,7 @@ function Navbar() {
           onClick={() => navigate("/profile")}
           className="bg-red-600 text-white px-4 py-2 rounded-lg"
         >
-          Profile
+          👤 Profile
         </button>
       </div>
     </nav>
