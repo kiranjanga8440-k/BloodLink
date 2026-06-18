@@ -29,7 +29,7 @@ const donorSchema = new mongoose.Schema({
   },
   verified: {
     type: Boolean,
-    default: false
+    default: true
   },
 
   lastDonationDate: {
