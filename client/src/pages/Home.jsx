@@ -1,6 +1,28 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import API from "../api";
 
 function Home() {
+  const [stats, setStats] = useState({
+    totalDonors: 0,
+    verifiedDonors: 0,
+    unverifiedDonors: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get(`${API}/api/donors/stats`);
+        setStats(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <div className="min-h-screen bg-red-50">
 
@@ -41,20 +63,26 @@ function Home() {
 
           <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
             <h2 className="text-4xl mb-2">❤️</h2>
-            <p className="text-3xl font-bold text-red-600">100+</p>
+            <p className="text-3xl font-bold text-red-600">
+              {stats.totalDonors}
+            </p>
             <p>Total Donors</p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
             <h2 className="text-4xl mb-2">✅</h2>
-            <p className="text-3xl font-bold text-green-600">80+</p>
+            <p className="text-3xl font-bold text-green-600">
+              {stats.verifiedDonors}
+            </p>
             <p>Verified Donors</p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-            <h2 className="text-4xl mb-2">🚨</h2>
-            <p className="text-3xl font-bold text-orange-600">10+</p>
-            <p>Emergency Requests</p>
+            <h2 className="text-4xl mb-2">❌</h2>
+            <p className="text-3xl font-bold text-orange-600">
+              {stats.unverifiedDonors}
+            </p>
+            <p>Unverified Donors</p>
           </div>
 
         </div>
