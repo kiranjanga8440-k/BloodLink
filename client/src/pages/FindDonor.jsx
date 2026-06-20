@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import API from "../api";
+import { useNavigate } from "react-router-dom";
 
 function FindDonor() {
   const [donors, setDonors] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDonors();
@@ -42,43 +44,22 @@ function FindDonor() {
 
       <div className="grid md:grid-cols-3 gap-6">
         {filteredDonors.map((donor) => (
-          <div key={donor._id} className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-3xl font-bold text-red-500">
-              {donor.bloodGroup}
-            </h2>
+          <div className="donor-card">
+            <h3>{donor.name}</h3>
 
-            <p className="mt-4">
-              <strong>Name:</strong> {donor.name}
+            <p>
+              <strong>Blood Group:</strong> {donor.bloodGroup}
             </p>
 
             <p>
-              <strong>City:</strong> {donor.city}
+              <strong>Status:</strong>{" "}
+              {donor.available ? "🟢 Available" : "🔴 Unavailable"}
             </p>
 
-            <p>
-              <strong>Phone:</strong> {donor.phone}
-            </p>
-            <p><b>Age:</b> {donor.age}</p>
-
-            <p>
-              <b>Verified:</b>
-              {donor.verified ? " ✅ Verified" : " ❌ Not Verified"}
-            </p>
-
-            <p>
-              <b>Last Donation:</b>
-              {donor.lastDonationDate
-                ? new Date(donor.lastDonationDate).toLocaleDateString()
-                : "Never Donated"}
-            </p>
-
-            <p>
-              <b>Total Donations:</b>
-              {donor.totalDonations}
-            </p>
-
-            <button className="mt-5 w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600">
-              Request Blood
+            <button
+              onClick={() => navigate(`/donor/${donor._id}`)}
+            >
+              View Details
             </button>
           </div>
         ))}

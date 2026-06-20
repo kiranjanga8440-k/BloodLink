@@ -9,6 +9,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminDonors from "./pages/AdminDonors";
 import AdminRequests from "./pages/AdminRequests";
 import Profile from "./pages/Profile";
+import DonorDetails from "./pages/DonorDetails";
 function App() {
 
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/admin/donors" element={<AdminDonors />} />
         <Route path="/admin/requests" element={<AdminRequests />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/donor/:id" element={<DonorDetails />} />
       </Routes>
 
     </div>
