@@ -10,12 +10,7 @@ function Navbar() {
         <button>Find Donor</button>
         <button>Become Donor</button>
         <button>Login</button>
-        <button
-          onClick={() => navigate("/profile")}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg"
-        >
-          👤 Profile
-        </button>
+        
       </div>
     </nav>
   );

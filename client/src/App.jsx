@@ -8,7 +8,6 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminDonors from "./pages/AdminDonors";
 import AdminRequests from "./pages/AdminRequests";
-import Profile from "./pages/Profile";
 import DonorDetails from "./pages/DonorDetails";
 function App() {
 
@@ -27,7 +26,7 @@ function App() {
             <Link to="/find">Find Donor</Link>
             <Link to="/emergency">Emergency</Link>
             <Link to="/requests">Requests</Link>
-            <Link to="/profile">Profile</Link>
+            
           </div>
 
         </div>
@@ -43,7 +42,6 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/donors" element={<AdminDonors />} />
         <Route path="/admin/requests" element={<AdminRequests />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/donor/:id" element={<DonorDetails />} />
       </Routes>
 
