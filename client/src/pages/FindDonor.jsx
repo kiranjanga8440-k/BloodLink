@@ -18,7 +18,6 @@ function FindDonor() {
       setDonors(res.data);
     } catch (error) {
       console.log(error);
-      setDonors(res.data);
     }
   };
 
@@ -43,26 +42,40 @@ function FindDonor() {
       />
 
       <div className="grid md:grid-cols-3 gap-6">
-        {filteredDonors.map((donor) => (
-          <div className="donor-card">
-            <h3>{donor.name}</h3>
-
-            <p>
-              <strong>Blood Group:</strong> {donor.bloodGroup}
-            </p>
-
-            <p>
-              <strong>Status:</strong>{" "}
-              {donor.available ? "🟢 Available" : "🔴 Unavailable"}
-            </p>
-
-            <button
-              onClick={() => navigate(`/donor/${donor._id}`)}
+        {filteredDonors.length > 0 ? (
+          filteredDonors.map((donor) => (
+            <div
+              key={donor._id}
+              className="bg-white shadow-md rounded-lg p-5"
             >
-              View Details
-            </button>
-          </div>
-        ))}
+              <h2 className="text-xl font-bold text-red-600 mb-2">
+                {donor.name}
+              </h2>
+
+              <p className="mb-2">
+                <strong>Blood Group:</strong> {donor.bloodGroup}
+              </p>
+
+              <p className="mb-4">
+                <strong>Status:</strong>{" "}
+                {donor.available
+                  ? "🟢 Available"
+                  : "🔴 Unavailable"}
+              </p>
+
+              <button
+                onClick={() => navigate(`/donor/${donor._id}`)}
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                View Details
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="text-center col-span-3">
+            No donors found.
+          </p>
+        )}
       </div>
     </div>
   );
