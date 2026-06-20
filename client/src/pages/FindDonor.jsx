@@ -58,7 +58,7 @@ function FindDonor() {
 
               <p className="mb-4">
                 <strong>Status:</strong>{" "}
-                {donor.available
+                {donor.available !== false
                   ? "🟢 Available"
                   : "🔴 Unavailable"}
               </p>
