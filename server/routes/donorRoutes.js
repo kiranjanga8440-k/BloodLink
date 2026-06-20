@@ -127,6 +127,23 @@ router.put("/verify/:id", async (req, res) => {
     });
   }
 });
+router.get("/:id", async (req, res) => {
+  try {
+    const donor = await Donor.findById(req.params.id);
+
+    if (!donor) {
+      return res.status(404).json({
+        message: "Donor not found",
+      });
+    }
+
+    res.json(donor);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
 
 // Delete Donor
 router.delete("/:id", async (req, res) => {
@@ -161,5 +178,6 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
 
 module.exports = router;
