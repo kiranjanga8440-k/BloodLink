@@ -27,6 +27,10 @@ const donorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  aadhaarDocument: {
+    type: String,
+    default: "",
+  },
   verified: {
     type: Boolean,
     default: true
