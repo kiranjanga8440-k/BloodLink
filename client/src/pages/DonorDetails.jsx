@@ -43,10 +43,10 @@ function DonorDetails() {
         <p><strong>Email:</strong> {donor.email}</p>
         <p><strong>City:</strong> {donor.city}</p>
         <p>
-          <strong>Status:</strong>{" "}
-          {donor.available ? "🟢 Available" : "🔴 Unavailable"}
-        </p>
-      </div>
+            <strong>Status:</strong>{" "}
+            {donor.available !== false ? "🟢 Available" : "🔴 Unavailable"}
+            </p>
+     </div>
     </div>
   );
 }
