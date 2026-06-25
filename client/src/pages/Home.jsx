@@ -65,46 +65,46 @@ function Home() {
       </div>
 
       {/* Stats Section */}
-      <div className="max-w-6xl mx-auto px-6 mt-6 sm:-mt-12 relative z-20">
+      <div className="max-w-6xl mx-auto px-6 mt-12 md:mt-16 relative z-20">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-          <div className="glass-panel p-5 md:p-8 rounded-2xl border border-red-100 flex items-center gap-4 md:gap-6 bg-white/95">
+          <div className="glass-panel p-6 md:p-8 rounded-2xl border border-red-50 flex items-center gap-4 md:gap-6 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-red-50 flex items-center justify-center text-2xl md:text-3xl shadow-sm text-red-600 font-bold shrink-0">
               🩸
             </div>
             <div>
               <p className="text-xs md:text-sm font-semibold text-gray-500 uppercase tracking-wider">Total Donors</p>
               {loading ? (
-                <div className="h-6 w-12 bg-gray-200 rounded animate-pulse mt-1" />
+                <div className="h-7 w-16 bg-gray-200 rounded animate-pulse mt-1" />
               ) : (
-                <h3 className="text-2xl md:text-3xl font-black text-gray-900 mt-0.5">{stats.totalDonors}</h3>
+                <h3 className="text-3xl md:text-4xl font-black text-gray-900 mt-0.5">{stats.totalDonors}</h3>
               )}
             </div>
           </div>
 
-          <div className="glass-panel p-5 md:p-8 rounded-2xl border border-red-100 flex items-center gap-4 md:gap-6 bg-white/95">
+          <div className="glass-panel p-6 md:p-8 rounded-2xl border border-red-50 flex items-center gap-4 md:gap-6 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-2xl md:text-3xl shadow-sm text-emerald-600 font-bold shrink-0">
               ✅
             </div>
             <div>
               <p className="text-xs md:text-sm font-semibold text-gray-500 uppercase tracking-wider">Verified Donors</p>
               {loading ? (
-                <div className="h-6 w-12 bg-gray-200 rounded animate-pulse mt-1" />
+                <div className="h-7 w-16 bg-gray-200 rounded animate-pulse mt-1" />
               ) : (
-                <h3 className="text-2xl md:text-3xl font-black text-emerald-600 mt-0.5">{stats.verifiedDonors}</h3>
+                <h3 className="text-3xl md:text-4xl font-black text-emerald-600 mt-0.5">{stats.verifiedDonors}</h3>
               )}
             </div>
           </div>
 
-          <div className="glass-panel p-5 md:p-8 rounded-2xl border border-red-100 flex items-center gap-4 md:gap-6 bg-white/95">
+          <div className="glass-panel p-6 md:p-8 rounded-2xl border border-red-50 flex items-center gap-4 md:gap-6 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-amber-50 flex items-center justify-center text-2xl md:text-3xl shadow-sm text-amber-600 font-bold shrink-0">
               ⏳
             </div>
             <div>
               <p className="text-xs md:text-sm font-semibold text-gray-500 uppercase tracking-wider">Unverified/Pending</p>
               {loading ? (
-                <div className="h-6 w-12 bg-gray-200 rounded animate-pulse mt-1" />
+                <div className="h-7 w-16 bg-gray-200 rounded animate-pulse mt-1" />
               ) : (
-                <h3 className="text-2xl md:text-3xl font-black text-amber-600 mt-0.5">{stats.unverifiedDonors}</h3>
+                <h3 className="text-3xl md:text-4xl font-black text-amber-600 mt-0.5">{stats.unverifiedDonors}</h3>
               )}
             </div>
           </div>
