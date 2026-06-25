@@ -11,6 +11,7 @@ function RegisterDonor() {
     bloodGroup: "",
     city: "",
     lastDonationDate: "",
+    aadhaarNumber: "",
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -29,6 +30,11 @@ function RegisterDonor() {
       return;
     }
 
+    if (!/^[0-9]{12}$/.test(donor.aadhaarNumber)) {
+      alert("Please enter a valid 12-digit Aadhaar Number");
+      return;
+    }
+
     if (parseInt(donor.age) < 18) {
       alert("You must be at least 18 years old to register as a donor.");
       return;
@@ -36,7 +42,6 @@ function RegisterDonor() {
 
     setSubmitting(true);
     try {
-      // Clean request body, convert lastDonationDate to null if empty
       const payload = {
         ...donor,
         lastDonationDate: donor.lastDonationDate || null,
@@ -59,6 +64,7 @@ function RegisterDonor() {
         bloodGroup: "",
         city: "",
         lastDonationDate: "",
+        aadhaarNumber: "",
       });
     } catch (error) {
       if (error.response) {
@@ -73,7 +79,7 @@ function RegisterDonor() {
 
   return (
     <section className="max-w-2xl mx-auto px-6 py-12">
-      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-red-100 shadow-xl relative overflow-hidden">
+      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-red-100 shadow-xl relative overflow-hidden bg-white">
         {/* Subtle decorative glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-red-100/30 rounded-full blur-2xl pointer-events-none" />
 
@@ -94,7 +100,7 @@ function RegisterDonor() {
               <input
                 type="text"
                 name="name"
-                placeholder="John Doe"
+                placeholder="Name"
                 value={donor.name}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
@@ -107,7 +113,7 @@ function RegisterDonor() {
               <input
                 type="email"
                 name="email"
-                placeholder="john@example.com"
+                placeholder="Email"
                 value={donor.email}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
@@ -120,7 +126,7 @@ function RegisterDonor() {
               <input
                 type="text"
                 name="phone"
-                placeholder="10-digit mobile number"
+                placeholder="Phone"
                 value={donor.phone}
                 onChange={(e) =>
                   setDonor({
@@ -139,7 +145,7 @@ function RegisterDonor() {
               <input
                 type="number"
                 name="age"
-                placeholder="Min 18 years"
+                placeholder="Age"
                 value={donor.age}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
@@ -173,13 +179,32 @@ function RegisterDonor() {
               <input
                 type="text"
                 name="city"
-                placeholder="e.g. New York"
+                placeholder="City"
                 value={donor.city}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
                 required
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Aadhaar Number (12-digit)</label>
+            <input
+              type="text"
+              name="aadhaarNumber"
+              placeholder="Aadhaar Number"
+              value={donor.aadhaarNumber}
+              onChange={(e) =>
+                setDonor({
+                  ...donor,
+                  aadhaarNumber: e.target.value.replace(/[^0-9]/g, ""),
+                })
+              }
+              maxLength={12}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
+              required
+            />
           </div>
 
           <div>

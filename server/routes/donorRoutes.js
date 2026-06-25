@@ -6,10 +6,10 @@ const authMiddleware = require("../middleware/auth");
 // Register Donor
 router.post("/register", async (req, res) => {
   try {
-    const { email, phone } = req.body;
+    const { email, phone, aadhaarNumber } = req.body;
 
     const existingDonor = await Donor.findOne({
-      $or: [{ email }, { phone }],
+      $or: [{ email }, { phone }, { aadhaarNumber }],
     });
 
     if (existingDonor) {

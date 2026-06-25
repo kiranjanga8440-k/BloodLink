@@ -74,7 +74,7 @@ function EmergencyRequest() {
               <input
                 type="text"
                 name="patientName"
-                placeholder="Patient Full Name"
+                placeholder="Patient Name"
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
                 value={form.patientName}
                 onChange={handleChange}
@@ -109,7 +109,7 @@ function EmergencyRequest() {
                 <input
                   type="text"
                   name="city"
-                  placeholder="e.g. New York"
+                  placeholder="City"
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
                   value={form.city}
                   onChange={handleChange}
@@ -123,7 +123,7 @@ function EmergencyRequest() {
               <input
                 type="text"
                 name="hospital"
-                placeholder="Hospital Name & Branch"
+                placeholder="Hospital"
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
                 value={form.hospital}
                 onChange={handleChange}
@@ -136,7 +136,7 @@ function EmergencyRequest() {
               <input
                 type="text"
                 name="phone"
-                placeholder="10-digit phone number"
+                placeholder="Phone"
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white/50 transition duration-150"
                 value={form.phone}
                 onChange={handleChange}
