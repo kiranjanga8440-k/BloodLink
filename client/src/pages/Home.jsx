@@ -9,6 +9,7 @@ function Home() {
     verifiedDonors: 0,
     unverifiedDonors: 0,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -16,7 +17,9 @@ function Home() {
         const res = await axios.get(`${API}/api/donors/stats`);
         setStats(res.data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to load statistics:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -24,108 +27,139 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-red-50">
-
+    <div className="min-h-screen bg-gray-50/50 pb-20">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-red-600 to-red-800 text-white py-20">
-        <div className="max-w-6xl mx-auto px-6 text-center">
+      <div className="relative overflow-hidden dark-crimson-gradient text-white py-24 sm:py-32 shadow-inner">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/20 rounded-full blur-[120px] pointer-events-none" />
 
-          <h1 className="text-6xl font-bold mb-6">
-            🩸 BloodLink
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-semibold tracking-wider uppercase mb-6 animate-pulse-slow">
+            ❤️ Saving Lives Daily
+          </div>
+
+          <h1 className="text-5xl sm:text-7xl font-black tracking-tight mb-8">
+            Blood<span className="text-red-500">Link</span>
           </h1>
 
-          <p className="text-xl mb-10">
-            Connecting Blood Donors with Patients in Need
+          <p className="text-lg sm:text-xl text-gray-200 font-medium max-w-2xl mx-auto mb-12 leading-relaxed">
+            Connecting real-time blood donors with patients in urgent need. Register today, get verified, and stand ready to make a difference.
           </p>
 
           <div className="flex justify-center gap-4 flex-wrap">
             <Link
               to="/register"
-              className="bg-white text-red-600 px-8 py-4 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+              className="bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/30 active:scale-98 transition duration-200"
             >
-              Register as Donor
+              Become a Donor
             </Link>
 
             <Link
               to="/find"
-              className="border-2 border-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-red-600 transition"
+              className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl font-bold backdrop-blur-sm hover:bg-white hover:text-red-950 active:scale-98 transition duration-200"
             >
-              Find Donor
+              Find Blood Donors
             </Link>
           </div>
-
         </div>
       </div>
 
       {/* Stats Section */}
-      <div className="max-w-6xl mx-auto px-6 -mt-10">
-        <div className="grid md:grid-cols-3 gap-6">
-
-          <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-            <h2 className="text-4xl mb-2">❤️</h2>
-            <p className="text-3xl font-bold text-red-600">
-              {stats.totalDonors}
-            </p>
-            <p>Total Donors</p>
+      <div className="max-w-6xl mx-auto px-6 -mt-12 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="glass-panel p-8 rounded-2xl border border-red-100 flex items-center gap-6">
+            <div className="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center text-3xl shadow-sm text-red-600 font-bold">
+              🩸
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Total Donors</p>
+              {loading ? (
+                <div className="h-8 w-16 bg-gray-200 rounded animate-pulse mt-1" />
+              ) : (
+                <h3 className="text-3xl font-black text-gray-900 mt-0.5">{stats.totalDonors}</h3>
+              )}
+            </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-            <h2 className="text-4xl mb-2">✅</h2>
-            <p className="text-3xl font-bold text-green-600">
-              {stats.verifiedDonors}
-            </p>
-            <p>Verified Donors</p>
+          <div className="glass-panel p-8 rounded-2xl border border-red-100 flex items-center gap-6">
+            <div className="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-3xl shadow-sm text-emerald-600 font-bold">
+              ✅
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Verified Donors</p>
+              {loading ? (
+                <div className="h-8 w-16 bg-gray-200 rounded animate-pulse mt-1" />
+              ) : (
+                <h3 className="text-3xl font-black text-emerald-600 mt-0.5">{stats.verifiedDonors}</h3>
+              )}
+            </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-            <h2 className="text-4xl mb-2">❌</h2>
-            <p className="text-3xl font-bold text-orange-600">
-              {stats.unverifiedDonors}
-            </p>
-            <p>Unverified Donors</p>
+          <div className="glass-panel p-8 rounded-2xl border border-red-100 flex items-center gap-6">
+            <div className="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-3xl shadow-sm text-amber-600 font-bold">
+              ⏳
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Unverified/Pending</p>
+              {loading ? (
+                <div className="h-8 w-16 bg-gray-200 rounded animate-pulse mt-1" />
+              ) : (
+                <h3 className="text-3xl font-black text-amber-600 mt-0.5">{stats.unverifiedDonors}</h3>
+              )}
+            </div>
           </div>
-
         </div>
       </div>
 
-      {/* Features */}
-      <div className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-center text-red-600 mb-12">
-          Why BloodLink?
-        </h2>
+      {/* Features Section */}
+      <div className="max-w-6xl mx-auto px-6 py-24">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+            How BloodLink Helps
+          </h2>
+          <p className="text-gray-500 font-medium">
+            A comprehensive, automated platform to bridge the gap between donors and emergency requests instantly.
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-
-          <div className="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold mb-3">
-              🔍 Quick Search
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:border-red-100 hover:shadow-lg transition duration-300">
+            <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-2xl mb-6">
+              🔍
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              Intelligent Compatibility
             </h3>
-            <p>
-              Find blood donors instantly by blood group and city.
+            <p className="text-gray-500 leading-relaxed text-sm">
+              Queries support full medical blood group matching (e.g., A+ recipients match O-, A-, O+, and A+ donors) to widen the donor pool.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold mb-3">
-              🚨 Emergency Requests
+          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:border-red-100 hover:shadow-lg transition duration-300">
+            <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-2xl mb-6">
+              🚨
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              Automated Email Alerts
             </h3>
-            <p>
-              Post urgent blood requirements and reach donors quickly.
+            <p className="text-gray-500 leading-relaxed text-sm">
+              Creating an emergency request triggers automatic Nodemailer alerts to matching verified donors in the target city instantly.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold mb-3">
-              ✅ Verified Donors
+          <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:border-red-100 hover:shadow-lg transition duration-300">
+            <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-2xl mb-6">
+              ⏱️
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              90-Day Cooldown Protection
             </h3>
-            <p>
-              Maintain trust with verified donor profiles.
+            <p className="text-gray-500 leading-relaxed text-sm">
+              Keeps donors safe by tracking last donation dates and preventing them from showing up as active matches during their recovery cooldown.
             </p>
           </div>
-
         </div>
       </div>
-
     </div>
   );
 }

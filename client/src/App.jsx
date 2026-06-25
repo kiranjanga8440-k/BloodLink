@@ -1,4 +1,5 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import RegisterDonor from "./components/RegisterDonor";
 import FindDonor from "./pages/FindDonor";
@@ -9,28 +10,11 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminDonors from "./pages/AdminDonors";
 import AdminRequests from "./pages/AdminRequests";
 import DonorDetails from "./pages/DonorDetails";
+
 function App() {
-
   return (
-    <div>
-      <nav className="bg-red-600 text-white p-4 shadow-lg">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-
-          <h1 className="text-2xl font-bold">
-            🩸 BloodLink
-          </h1>
-
-          <div className="space-x-6">
-            <Link to="/">Home</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/find">Find Donor</Link>
-            <Link to="/emergency">Emergency</Link>
-            <Link to="/requests">Requests</Link>
-            
-          </div>
-
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gray-50/50">
+      <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />

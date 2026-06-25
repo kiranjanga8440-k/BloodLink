@@ -4,15 +4,49 @@ const router = express.Router();
 const EmergencyRequest = require("../models/EmergencyRequest");
 const Donor = require("../models/Donor");
 
+// Medical compatibility helper mapping recipient to eligible donor blood groups
+const getCompatibleBloodGroups = (recipientBg) => {
+  const map = {
+    "A+": ["A+", "A-", "O+", "O-"],
+    "A-": ["A-", "O-"],
+    "B+": ["B+", "B-", "O+", "O-"],
+    "B-": ["B-", "O-"],
+    "AB+": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    "AB-": ["AB-", "A-", "B-", "O-"],
+    "O+": ["O+", "O-"],
+    "O-": ["O-"]
+  };
+  return map[recipientBg.toUpperCase()] || [recipientBg];
+};
+
 // Create emergency request
 router.post("/", async (req, res) => {
   try {
     const request = new EmergencyRequest(req.body);
     await request.save();
 
+    // Trigger email alerts in the background
+    const compatibleGroups = getCompatibleBloodGroups(request.bloodGroup);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+    
+    const donors = await Donor.find({
+      bloodGroup: { $in: compatibleGroups },
+      city: { $regex: new RegExp(request.city.trim(), "i") },
+      verified: true,
+      $or: [
+        { lastDonationDate: null },
+        { lastDonationDate: { $lte: ninetyDaysAgo } }
+      ]
+    });
+
+    const { sendEmergencyAlertEmail } = require("../utils/emailHelper");
+    donors.forEach(donor => {
+      sendEmergencyAlertEmail({ donor, request });
+    });
+
     res.json({
       success: true,
-      message: "Emergency Request Submitted",
+      message: `Emergency Request Submitted. Found ${donors.length} matching donor(s) and sent alerts.`,
     });
 
   } catch (error) {
@@ -28,9 +62,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const requests = await EmergencyRequest.find().sort({ createdAt: -1 });
-
     res.json(requests);
-
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -65,20 +97,31 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Match donors
+// Match donors with medical compatibility and 90-day cooldown check
 router.get("/match/:bloodGroup/:city", async (req, res) => {
   try {
     const { bloodGroup, city } = req.params;
 
+    const compatibleGroups = getCompatibleBloodGroups(bloodGroup);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+
     const donors = await Donor.find({
-      bloodGroup,
-      city: { $regex: city, $options: "i" },
+      bloodGroup: { $in: compatibleGroups },
+      city: { $regex: new RegExp(city.trim(), "i") },
+    });
+
+    const enrichedDonors = donors.map(donor => {
+      const donorObj = donor.toObject();
+      const inCooldown = donor.lastDonationDate && (new Date(donor.lastDonationDate) > ninetyDaysAgo);
+      donorObj.isEligible = donor.verified && !inCooldown;
+      donorObj.cooldownStatus = inCooldown ? "in-cooldown" : "eligible";
+      return donorObj;
     });
 
     res.json({
       success: true,
-      count: donors.length,
-      donors,
+      count: enrichedDonors.length,
+      donors: enrichedDonors,
     });
 
   } catch (error) {
@@ -89,4 +132,4 @@ router.get("/match/:bloodGroup/:city", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router;

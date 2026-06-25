@@ -91,7 +91,16 @@ router.get("/verified", async (req, res) => {
       verified: true,
     });
 
-    res.json(donors);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+    const enrichedDonors = donors.map(donor => {
+      const donorObj = donor.toObject();
+      const inCooldown = donor.lastDonationDate && (new Date(donor.lastDonationDate) > ninetyDaysAgo);
+      donorObj.isEligible = !inCooldown;
+      donorObj.cooldownStatus = inCooldown ? "in-cooldown" : "eligible";
+      return donorObj;
+    });
+
+    res.json(enrichedDonors);
   } catch (error) {
     console.log(error);
 
@@ -137,7 +146,13 @@ router.get("/:id", async (req, res) => {
       });
     }
 
-    res.json(donor);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+    const donorObj = donor.toObject();
+    const inCooldown = donor.lastDonationDate && (new Date(donor.lastDonationDate) > ninetyDaysAgo);
+    donorObj.isEligible = donor.verified && !inCooldown;
+    donorObj.cooldownStatus = inCooldown ? "in-cooldown" : "eligible";
+
+    res.json(donorObj);
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -169,7 +184,16 @@ router.get("/", async (req, res) => {
   try {
     const donors = await Donor.find();
 
-    res.json(donors);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+    const enrichedDonors = donors.map(donor => {
+      const donorObj = donor.toObject();
+      const inCooldown = donor.lastDonationDate && (new Date(donor.lastDonationDate) > ninetyDaysAgo);
+      donorObj.isEligible = donor.verified && !inCooldown;
+      donorObj.cooldownStatus = inCooldown ? "in-cooldown" : "eligible";
+      return donorObj;
+    });
+
+    res.json(enrichedDonors);
   } catch (error) {
     console.log(error);
 
