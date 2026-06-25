@@ -54,7 +54,7 @@ function AdminDashboard() {
           <button
             className="bg-gray-800 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-red-600 active:scale-98 hover:shadow-lg hover:shadow-red-600/10 transition duration-200"
             onClick={() => {
-              localStorage.removeItem("admin");
+              localStorage.removeItem("adminToken");
               window.location.href = "/admin-login";
             }}
           >

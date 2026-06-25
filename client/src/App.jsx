@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import RegisterDonor from "./components/RegisterDonor";
 import FindDonor from "./pages/FindDonor";
@@ -23,9 +24,9 @@ function App() {
         <Route path="/emergency" element={<EmergencyRequest />} />
         <Route path="/requests" element={<EmergencyDashboard />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/donors" element={<AdminDonors />} />
-        <Route path="/admin/requests" element={<AdminRequests />} />
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/donors" element={<ProtectedRoute><AdminDonors /></ProtectedRoute>} />
+        <Route path="/admin/requests" element={<ProtectedRoute><AdminRequests /></ProtectedRoute>} />
         <Route path="/donor/:id" element={<DonorDetails />} />
       </Routes>
 

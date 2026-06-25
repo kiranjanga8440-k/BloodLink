@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Donor = require("../models/Donor");
+const authMiddleware = require("../middleware/auth");
 
 // Register Donor
 router.post("/register", async (req, res) => {
@@ -111,7 +112,7 @@ router.get("/verified", async (req, res) => {
 });
 
 // Verify Donor
-router.put("/verify/:id", async (req, res) => {
+router.put("/verify/:id", authMiddleware, async (req, res) => {
   try {
     const donor = await Donor.findById(req.params.id);
 
@@ -161,7 +162,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Delete Donor
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     await Donor.findByIdAndDelete(req.params.id);
 
@@ -180,7 +181,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // Get All Donors
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const donors = await Donor.find();
 

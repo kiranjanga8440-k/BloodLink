@@ -3,6 +3,7 @@ const router = express.Router();
 
 const EmergencyRequest = require("../models/EmergencyRequest");
 const Donor = require("../models/Donor");
+const authMiddleware = require("../middleware/auth");
 
 // Medical compatibility helper mapping recipient to eligible donor blood groups
 const getCompatibleBloodGroups = (recipientBg) => {
@@ -72,7 +73,7 @@ router.get("/", async (req, res) => {
 });
 
 // Delete request
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const deleted = await EmergencyRequest.findByIdAndDelete(req.params.id);
 
@@ -98,7 +99,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // Match donors with medical compatibility and 90-day cooldown check
-router.get("/match/:bloodGroup/:city", async (req, res) => {
+router.get("/match/:bloodGroup/:city", authMiddleware, async (req, res) => {
   try {
     const { bloodGroup, city } = req.params;
 

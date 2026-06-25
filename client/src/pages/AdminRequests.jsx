@@ -29,7 +29,10 @@ function AdminRequests() {
       return;
     }
     try {
-      const res = await axios.delete(`${API}/api/emergency/${id}`);
+      const token = localStorage.getItem("adminToken");
+      const res = await axios.delete(`${API}/api/emergency/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       alert(res.data.message || "Request closed successfully.");
       if (activeRequestId === id) {
         setMatchedDonors([]);
@@ -45,8 +48,12 @@ function AdminRequests() {
   const findMatches = async (id, bloodGroup, city) => {
     try {
       setActiveRequestId(id);
+      const token = localStorage.getItem("adminToken");
       const res = await axios.get(
-        `${API}/api/emergency/match/${bloodGroup}/${city}`
+        `${API}/api/emergency/match/${bloodGroup}/${city}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
       );
       setMatchedDonors(res.data.donors);
     } catch (error) {

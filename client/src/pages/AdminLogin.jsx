@@ -17,7 +17,7 @@ function AdminLogin() {
       );
 
       alert(res.data.message);
-      localStorage.setItem("admin", "true");
+      localStorage.setItem("adminToken", res.data.token);
       window.location.href = "/admin";
     } catch (err) {
       alert("Invalid Credentials");

@@ -13,7 +13,10 @@ function AdminDonors() {
 
   const fetchDonors = async () => {
     try {
-      const res = await axios.get(`${API}/api/donors`);
+      const token = localStorage.getItem("adminToken");
+      const res = await axios.get(`${API}/api/donors`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setDonors(res.data);
     } catch (error) {
       console.error("Error fetching donors:", error);
@@ -27,7 +30,10 @@ function AdminDonors() {
       return;
     }
     try {
-      const res = await axios.delete(`${API}/api/donors/${id}`);
+      const token = localStorage.getItem("adminToken");
+      const res = await axios.delete(`${API}/api/donors/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       alert(res.data.message || "Donor profile deleted.");
       fetchDonors();
     } catch (error) {
@@ -38,7 +44,10 @@ function AdminDonors() {
 
   const verifyDonor = async (id) => {
     try {
-      await axios.put(`${API}/api/donors/verify/${id}`);
+      const token = localStorage.getItem("adminToken");
+      await axios.put(`${API}/api/donors/verify/${id}`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       alert("Donor verified successfully");
       fetchDonors();
     } catch (err) {
